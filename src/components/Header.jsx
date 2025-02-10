@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
-import { LOGO, User_Avatar } from "../utils/constant";
+import { LOGO, SUPPORTED_LANGUAGES, User_Avatar } from "../utils/constant";
+import { toggleGptSearchView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/configSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -48,14 +50,39 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  const handleGptSearchClick = () => {
+    dispatch(toggleGptSearchView());
+  };
+
+  const handleLanguageChange = (e) => {
+    dispatch(changeLanguage(e.target.value));
+  };
+
   return (
-    <div className="absolute p-2 bg-gradient-to-br from-black w-full flex justify-between z-10">
-      <img className="w-44 m-4" src={LOGO} alt="netflix-logo" />
+    <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black flex justify-between z-10">
+      <img className="w-44" src={LOGO} alt="netflix-logo" />
       {user && (
-        <div className="flex">
-          <img className="w-24 p-3 " src={User_Avatar} alt="profile-icon" />
-          <button onClick={handleSignout} className="text-white text-bold ">
-            SignOut
+        <div className="flex p-2">
+          <select
+            className="p-2 m-2 bg-gray-900 text-white"
+            onChange={handleLanguageChange}
+          >
+            {SUPPORTED_LANGUAGES.map((lang) => (
+              <option key={lang.identfier} value={lang.identfier}>
+                {lang.name}
+              </option>
+            ))}
+          </select>
+
+          <button
+            className="py-2 px-4 mx-4 my-2 bg-purple-800 text-white rounded-lg"
+            onClick={handleGptSearchClick}
+          >
+            Gpt Search
+          </button>
+          <img className="w-12 h-12 " src={User_Avatar} alt="profile-icon" />
+          <button onClick={handleSignout} className="text-white font-bold ">
+            (SignOut)
           </button>
         </div>
       )}

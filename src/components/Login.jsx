@@ -10,7 +10,7 @@ import {
 import { auth } from "../utils/firebase.js";
 import { addUser } from "../utils/userSlice.js";
 import { useDispatch } from "react-redux";
-import { User_Avatar } from "../utils/constant.js";
+import { BG_URL, User_Avatar } from "../utils/constant.js";
 
 //URL to see project
 //https://netflixgpt-fd087.web.app/
@@ -30,8 +30,6 @@ const Login = () => {
   const password = useRef(null);
 
   const handleButtonClick = () => {
-    // console.log(email.current.value);
-    // console.log(password.current.value);
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
     if (message) return;
@@ -92,10 +90,7 @@ const Login = () => {
     <div>
       <Header />
       <div className="absolute">
-        <img
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/638e9299-0637-42d1-ba39-54ade4cf2bf6/web/IN-en-20250203-TRIFECTA-perspective_46eb8857-face-4ea6-b901-dbf22b461369_medium.jpg"
-          alt="background-img"
-        />
+        <img src={BG_URL} alt="background-img" />
       </div>
       <form
         onSubmit={(e) => e.preventDefault()}
